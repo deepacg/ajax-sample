@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax sample</title>
+</head>
+<body>
+
+    <button id='populate'>Populate data</button>
+    <table border='1'>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Username</td>
+                <td>Email</td>
+            </tr>
+        </thead>
+        <tbody id='result_area'>
+            <tr>
+                <td>Please wait..</td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <form action="https://www.google.com">
+        <button type="submit">Submit</button>       Here when you click submit google.com will load with page refresh. This should not happen. So ajax is used
+    </form> -->
+
+    <script>
+        var xhr = new XMLHttpRequest()
+        xhr.open('get', 'https://jsonplaceholder.typicode.com/users')       // there is a third argument as well, sync or async, by default ajax is async
+       
+        document.getElementById('populate').addEventListener('click', function(){
+            xhr.send()
+        })
+        // alert('welcome')        // this is async, it need not wait for request to go and come back to display this alert
+        xhr.onreadystatechange = function(){
+            // console.log(xhr.readyState)
+            if(xhr.readyState == 4)
+                // console.log('response received')
+                if(xhr.status == 200) {
+                    // console.log('success')
+                    // console.log(xhr.responseText)
+                    var result_data = JSON.parse(xhr.responseText)
+                    var html_content = ""
+                    // console.log(result_data)
+                    for(x in result_data){
+                        console.log(result_data[x])
+                        html_content += "<tr><td>"+ result_data[x].id +"</td><td>"+ result_data[x].name+"</td><td>"+result_data[x].username+"</td><td>"+result_data[x].email+"</td></tr>"
+                        
+                    }
+                    document.getElementById('result_area').innerHTML = html_content
+                }
+                else if (xhr.status == 404)
+                    console.log('failed')
+        }
+    
+    </script>
+</body>
+</html>
