@@ -9,6 +9,8 @@
 <body>
 
     <button id='populate'>Populate data</button>
+    <button id='clear'>Clear data</button>
+
     <table border='1'>
         <thead>
             <tr>
@@ -29,13 +31,13 @@
     </form> -->
 
     <script>
-        var xhr = new XMLHttpRequest()
-        xhr.open('get', 'https://jsonplaceholder.typicode.com/users')       // there is a third argument as well, sync or async, by default ajax is async
+       
        
         document.getElementById('populate').addEventListener('click', function(){
+            var xhr = new XMLHttpRequest()
+            xhr.open('get', 'https://jsonplaceholder.typicode.com/users')       // there is a third argument as well, sync or async, by default ajax is async
             xhr.send()
-        })
-        // alert('welcome')        // this is async, it need not wait for request to go and come back to display this alert
+             // alert('welcome')        // this is async, it need not wait for request to go and come back to display this alert
         xhr.onreadystatechange = function(){
             // console.log(xhr.readyState)
             if(xhr.readyState == 4)
@@ -56,6 +58,11 @@
                 else if (xhr.status == 404)
                     console.log('failed')
         }
+        })
+        document.getElementById('clear').addEventListener('click', function(){
+            document.getElementById('result_area').innerHTML = ''
+        })
+       
     
     </script>
 </body>
